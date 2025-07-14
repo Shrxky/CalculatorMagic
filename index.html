@@ -42,7 +42,7 @@
         .body {
             background-color: rgb(0, 0, 0);
             width: 750px;
-            height: 750px;
+            height: 1000px;
             border-radius: 10px;
         }
         .top3 {
@@ -70,6 +70,13 @@
             height: 50px;
             font-size: large;
         }
+        .input{
+            position: absolute;
+            left: 50px;
+            bottom: 700px;
+            
+        }
+        
     </style>
     <title>Canculator</title>
 </head>
@@ -111,10 +118,19 @@
             <button class="middle" onclick="append('.')">,</button>
             <button class="side" onclick="calculate()">=</button>
         </div>
+        <div class = "input">
+            <input id = "dateinput">
+            <button style = "color: black;" onclick = "setdate()" >
+                Submit
+            </button>
+
+        </div>
     </div>
 
     <script>
         let expression = "";
+        let date = 0;
+
 
         function append(val) {
             if (val === '±') {
@@ -151,8 +167,15 @@
             updateDisplay();
         }
 
+
+        function setdate(){
+            date = document.getElementById("dateinput").value;
+            
+
+        }
+
         function calcdate(){
-            const date = 14725;
+            
             let num = output.textContent;
             num = date - num
             console.log(num)
