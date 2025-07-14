@@ -152,11 +152,14 @@
         }
 
         function calcdate(){
-            const date = 14725
-            let num = document.getElementById("output").textContent
+            const date = 14725;
+            const output = document.getElementById("output");
+            let num = output.textContent;
             num = date - num
             console.log(num)
             document.getElementById("output").textContent = num;
+            document.output.style.marginLeft = "100px";
+
 
         }
 
