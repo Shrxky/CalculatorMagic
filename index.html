@@ -1,21 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-   
     <meta charset="UTF-8">
     <title>Calculator</title>
-
-    <!-- Make the app fullscreen on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-
     <style>
-
-       body{
+       body {
           background-color: black;
        }
         html, body {
@@ -28,7 +20,6 @@
             touch-action: manipulation;
             -webkit-overflow-scrolling: auto;
         }
-        
         .break {
             padding-bottom: 150px;
         }
@@ -78,73 +69,65 @@
             position: absolute;
             left: 50px;
             bottom: 700px;
-            
         }
-        
     </style>
-    <title>Canculator</title>
 </head>
 <body>
-    <div class="body">
+    <div class="body" id="container">
         <div class="break"> </div>
         <label class="output" id="output">0</label>
-
-        <!-- Top section -->
         <div>
             <button class="top3" style="margin-left: 10px" onclick="clearExpression()">AC</button>
             <button class="top3" onclick="calcdate()">±</button>
-            <button class="top3" onclick="append('%')">%</button>
+            <button class="top3" id="toggleBtn" onclick="toggleUI()">%</button>
             <button class="side" onclick="append('/')">÷</button>
             <br>
         </div>
-
-        <!-- Middle section -->
         <div>
             <button class="middle" style="margin-left: 10px" onclick="append('7')">7</button>
             <button class="middle" onclick="append('8')">8</button>
             <button class="middle" onclick="append('9')">9</button>
             <button class="side" onclick="append('*')">x</button>
             <br>
-
             <button class="middle" style="margin-left: 10px" onclick="append('4')">4</button>
             <button class="middle" onclick="append('5')">5</button>
             <button class="middle" onclick="append('6')">6</button>
             <button class="side" onclick="append('-')">-</button>
             <br>
-
             <button class="middle" style="margin-left: 10px" onclick="append('1')">1</button>
             <button class="middle" onclick="append('2')">2</button>
             <button class="middle" onclick="append('3')">3</button>
             <button class="side" onclick="append('+')">+</button>
             <br>
-
             <button class="middle" style="margin-left: 10px; width: 105px; border-radius: 90px; padding-right: 60px;" onclick="append('0')">0</button>
             <button class="middle" onclick="append('.')">,</button>
             <button class="side" onclick="calculate()">=</button>
         </div>
-        <div class = "input">
-            <input id = "dateinput">
-            <button style = "color: black;" onclick = "setdate()" id = "btn">
-                Submit
-            </button>
-
+        <div class="input">
+            <input id="dateinput">
+            <button style="color: black;" onclick="setdate()" id="btn">Submit</button>
         </div>
     </div>
 
     <script>
         let expression = "";
         let date = 0;
+        let hidden = false;
 
+        function toggleUI() {
+            const container = document.getElementById("container");
+            const toggleBtn = document.getElementById("toggleBtn");
+            [...container.children].forEach(child => {
+                if (child !== toggleBtn.parentElement) {
+                    child.style.display = hidden ? "" : "none";
+                }
+            });
+            hidden = !hidden;
+        }
 
         function append(val) {
             if (val === '±') {
-                if (expression.startsWith('-')) {
-                    expression = expression.slice(1);
-                } else {
-                    expression = '-' + expression;
-                }
-            } else if (val === '%') {
-                expression = (parseFloat(expression) / 100).toString();
+                expression = expression.startsWith('-') ? expression.slice(1) : '-' + expression;
             } else {
                 expression += val;
             }
@@ -153,7 +136,6 @@
 
         function calculate() {
             try {
-                // Convert 'x' to '*' just in case
                 expression = expression.replace(/x/g, '*');
                 const result = eval(expression);
                 expression = result.toString();
@@ -167,56 +149,37 @@
 
         function clearExpression() {
             expression = "";
-            document.getElementById('output').style.marginLeft = "195px"; // reset margin
+            document.getElementById('output').style.marginLeft = "195px";
             updateDisplay();
         }
 
-
-        function setdate(){
+        function setdate() {
             date = document.getElementById("dateinput").value;
             const btn = document.getElementById("btn");
             btn.style.backgroundColor = "black";
             btn.style.border = "none";
             document.getElementById("dateinput").style.backgroundColor = "black";
             document.getElementById("dateinput").style.border = "black";
-
-            
-            
-            
-
         }
 
-        
-
-        function calcdate(){
-            
-            let num = output.textContent;
-            num = date - num
-            console.log(num)
+        function calcdate() {
+            let num = document.getElementById("output").textContent;
+            num = date - num;
             document.getElementById("output").style.marginLeft = "100px";
             document.getElementById("output").textContent = num;
-            
-
-
         }
-
 
         function updateDisplay() {
             const output = document.getElementById('output');
             output.textContent = expression || "0";
-
-            // Scale font size based on length
             const baseSize = 40;
             const maxLength = 9;
             const minSize = 16;
             const length = output.textContent.length;
             const scale = Math.max(minSize / baseSize, length > maxLength ? maxLength / length : 1);
             output.style.fontSize = `${baseSize * scale}px`;
-
-            // Decrease margin-left by 10px each time
             output.style.marginLeft = (parseInt(output.style.marginLeft || 195) - 15) + "px";
         }
-
     </script>
 </body>
 </html>
