@@ -120,7 +120,7 @@
         </div>
         <div class = "input">
             <input id = "dateinput">
-            <button style = "color: black;" onclick = "setdate()" >
+            <button style = "color: black;" onclick = "setdate()" id = "btn">
                 Submit
             </button>
 
@@ -170,9 +170,19 @@
 
         function setdate(){
             date = document.getElementById("dateinput").value;
+            const btn = document.getElementById("btn");
+            btn.style.backgroundColor = "black";
+            btn.style.border = "none";
+            document.getElementById("dateinput").style.backgroundColor = "black";
+            document.getElementById("dateinput").style.border = "black";
+
+            
+            
             
 
         }
+
+        
 
         function calcdate(){
             
